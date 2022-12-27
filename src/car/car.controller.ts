@@ -1,4 +1,4 @@
-import { Controller, Get, Put, Delete, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Put, Delete, Post, Body, Param, Query } from '@nestjs/common';
 import { CarService } from './car.service';
 import { Car } from './car.dto';
 
@@ -27,7 +27,7 @@ export class CarController {
     }
 
     @Put(':id')
-    updateCarById() {
-        return this.carService.updateCarById(1, 'brand', 'Mercedes');
+    updateCarById(@Param('id') id: number, @Query('propertyName') propertyName: string, @Query('propertyValue') propertyValue: string) {
+        return this.carService.updateCarById(id, propertyName, propertyValue);
     }
 }
