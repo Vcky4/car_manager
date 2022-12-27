@@ -6,16 +6,16 @@ export class CarService {
     public getCars() {
         return this.cars;
     }
-    public async postCar(car) {
+    public postCar(car) {
         this.cars.push(car);
     }
-    public async getCarById(carId) {
+    public getCarById(carId) {
         return this.cars.find(car => car.id === carId);
     }
-    public async deleteCarById(carId) {
+    public deleteCarById(carId) {
         this.cars = this.cars.filter(car => car.id !== carId);
     }
-    public async updateCarById(carId, car) {
+    public updateCarById(carId, car) {
         this.cars = this.cars.map(car => car.id === carId ? car : car);
     }
 }
