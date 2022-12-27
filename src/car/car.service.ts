@@ -32,7 +32,7 @@ export class CarService {
             const car = this.getCarById(carId);
             if (car) {
                 this.cars = this.cars.filter((car) => car.id !== carId);
-                return this.cars;
+                return resolve(this.cars);
             }
             throw new HttpException('Car not found', 404);
         });
@@ -43,7 +43,7 @@ export class CarService {
             const car = this.getCarById(carId);
             if (car) {
                 car[propertyName] = propertyValue;
-                return car;
+                return resolve(car);
             }
             throw new HttpException('Car not found', 404);
         });
