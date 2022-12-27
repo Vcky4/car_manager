@@ -1,25 +1,31 @@
 import { Injectable, HttpException } from '@nestjs/common';
 import { CARS } from './cars.mock';
+import { Car } from './car.dto';
 @Injectable()
 export class CarService {
     private cars = CARS;
     public getCars() {
         return this.cars;
     }
-    public postCar(car) {
+    public postCar(car: Car) {
+        const check = this.cars.find((it) => it.id === car.id);
+        if (check) {
+            throw new HttpException('Car already exists', 400);
+        }
         this.cars.push(car);
+        return this.cars;
     }
     public getCarById(carId: number) {
         const car = this.cars.find((car) => car.id === carId);
-        if(car) {
-            return car;
+        if (!car) {
+            throw new HttpException('Car not found', 404);
         }
-        throw new HttpException('Car not found', 404);
+        return car;
         // return this.cars.find((car) => car.id === carId);
     }
     public deleteCarById(carId: number) {
         const car = this.getCarById(carId);
-        if(car) {
+        if (car) {
             this.cars = this.cars.filter((car) => car.id !== carId);
             return this.cars;
         }
@@ -27,7 +33,7 @@ export class CarService {
     }
     public updateCarById(carId: number, propertyName: string, propertyValue: string) {
         const car = this.getCarById(carId);
-        if(car) {
+        if (car) {
             car[propertyName] = propertyValue;
             return car;
         }
