@@ -27,7 +27,9 @@ export class CarController {
     }
 
     @Put(':id')
-    updateCarById(@Param('id') id: number, @Query('propertyName') propertyName: string, @Query('propertyValue') propertyValue: string) {
+    updateCarById(@Param('id') id: number, @Query() query) {
+        const propertyName = query.propertyName;
+        const propertyValue = query.propertyValue;
         return this.carService.updateCarById(id, propertyName, propertyValue);
     }
 }
