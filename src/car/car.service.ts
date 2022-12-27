@@ -17,10 +17,21 @@ export class CarService {
         throw new HttpException('Car not found', 404);
         // return this.cars.find((car) => car.id === carId);
     }
-    public deleteCarById(carId) {
-        this.cars = this.cars.filter((car) => car.id !== carId);
+    public deleteCarById(carId: number) {
+        const car = this.getCarById(carId);
+        if(car) {
+            this.cars = this.cars.filter((car) => car.id !== carId);
+            return this.cars;
+        }
+        throw new HttpException('Car not found', 404);
     }
-    public updateCarById(carId, car) {
-        this.cars = this.cars.map((car) => car.id === carId ? car : car);
+    public updateCarById(carId: number, propertyName: string, propertyValue: string) {
+        const car = this.getCarById(carId);
+        if(car) {
+            car[propertyName] = propertyValue;
+            return car;
+        }
+        throw new HttpException('Car not found', 404);
+        // this.cars = this.cars.map((car) => car.id === carId ? car : car);
     }
 }
