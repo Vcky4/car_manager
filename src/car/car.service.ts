@@ -40,10 +40,10 @@ export class CarService {
     public updateCarById(id: number, propertyName: string, propertyValue: string): Promise<Car> {
         const carId = Number(id);
         return new Promise((resolve) => {
-            const car = this.getCarById(carId);
-            if (car) {
-                car[propertyName] = propertyValue;
-                return resolve(car);
+            const carIndex = this.cars.findIndex((car) => car.id === carId);
+            if (carIndex > -1) {
+                this.cars[carIndex][propertyName] = propertyValue;
+                return resolve(this.getCarById(carId));
             }
             throw new HttpException('Car not found', 404);
         });
