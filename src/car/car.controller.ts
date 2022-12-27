@@ -1,4 +1,4 @@
-import { Controller, Get, Put, Delete, Post, Body } from '@nestjs/common';
+import { Controller, Get, Put, Delete, Post, Body, Param } from '@nestjs/common';
 import { CarService } from './car.service';
 import { Car } from './car.dto';
 
@@ -12,8 +12,8 @@ export class CarController {
     }
 
     @Get(':id')
-    getCarById() {
-        return this.carService.getCarById(1);
+    getCarById(@Param('id') id: number) {
+        return this.carService.getCarById(id);
     }
 
     @Delete(':id')
