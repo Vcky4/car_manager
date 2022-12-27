@@ -17,8 +17,8 @@ export class CarController {
     }
 
     @Delete(':id')
-    deleteCarById() {
-        return this.carService.deleteCarById(1);
+    deleteCarById(@Param('id') id: number) {
+        return this.carService.deleteCarById(id);
     }
 
     @Post()
