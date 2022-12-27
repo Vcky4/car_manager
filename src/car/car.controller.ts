@@ -1,9 +1,10 @@
 import { Controller, Get, Put, Delete, Post, Body } from '@nestjs/common';
 import { CarService } from './car.service';
+import { Car } from './car.dto';
 
 @Controller('car')
 export class CarController {
-    constructor(private readonly carService: CarService) {}
+    constructor(private readonly carService: CarService) { }
 
     @Get()
     getCars() {
@@ -21,14 +22,8 @@ export class CarController {
     }
 
     @Post()
-    postCar(@Body) {
-        return this.carService.postCar({
-            id: 1,
-            brand: 'BMW',
-            model: 'M3',
-            year: 2018,
-            price: 50000
-        });
+    postCar(@Body() car: Car) {
+        return this.carService.postCar(car);
     }
 
     @Put(':id')
