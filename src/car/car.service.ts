@@ -37,13 +37,16 @@ export class CarService {
             throw new HttpException('Car not found', 404);
         });
     }
-    public updateCarById(carId: number, propertyName: string, propertyValue: string) {
-        const car = this.getCarById(carId);
-        if (car) {
-            car[propertyName] = propertyValue;
-            return car;
-        }
-        throw new HttpException('Car not found', 404);
+    public updateCarById(id: number, propertyName: string, propertyValue: string): Promise<Car> {
+        const carId = Number(id);
+        return new Promise((resolve) => {
+            const car = this.getCarById(carId);
+            if (car) {
+                car[propertyName] = propertyValue;
+                return car;
+            }
+            throw new HttpException('Car not found', 404);
+        });
         // this.cars = this.cars.map((car) => car.id === carId ? car : car);
     }
 }
