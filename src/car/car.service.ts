@@ -15,21 +15,27 @@ export class CarService {
         this.cars.push(car);
         return this.cars;
     }
-    public getCarById(carId: number) {
-        const car = this.cars.find((car) => car.id === carId);
-        if (!car) {
-            throw new HttpException('Car not found', 404);
-        }
-        return car;
+    public getCarById(id: number): Promise<Car> {
+        const carId = Number(id);
+        return new Promise((resolve) => {
+            const car = this.cars.find((car) => car.id === carId);
+            if (!car) {
+                throw new HttpException('Car not found', 404);
+            }
+            return resolve(car);
+        });
         // return this.cars.find((car) => car.id === carId);
     }
-    public deleteCarById(carId: number) {
-        const car = this.getCarById(carId);
-        if (car) {
-            this.cars = this.cars.filter((car) => car.id !== carId);
-            return this.cars;
-        }
-        throw new HttpException('Car not found', 404);
+    public deleteCarById(id: number): Promise<any> {
+        const carId = Number(id);
+        return new Promise((resolve) => {
+            const car = this.getCarById(carId);
+            if (car) {
+                this.cars = this.cars.filter((car) => car.id !== carId);
+                return this.cars;
+            }
+            throw new HttpException('Car not found', 404);
+        });
     }
     public updateCarById(carId: number, propertyName: string, propertyValue: string) {
         const car = this.getCarById(carId);
