@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CarModule } from './car/car.module';
+import { User } from './user/user.entity';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import { CarModule } from './car/car.module';
       username: 'root',
       password: 'root234',
       database: 'car_manager',
-      entities: [],
+      entities: [User],
       synchronize: true,
     }),
     CarModule
